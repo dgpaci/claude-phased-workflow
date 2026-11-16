@@ -39,21 +39,35 @@ one-word question, then what the ok unlocks. Multi-way choices go through
 
 ## The next command
 
-A command whose skill carries `disable-model-invocation: true` — every one
-the user types, `/execute-phase` and `/quality-check` among them — cannot be
-run by the model, so *"Shall I launch `/quality-check`?"* promises what the
-ok cannot deliver: the yes comes back as text, and the user is sent off to
-type the command after all. When a skill ends on one of them, it closes
+**Name it as the user types it.** The plugin is installed as `wf`, so its
+commands are `/wf:<skill>` — `/wf:quality-check`, `/wf:pull-request`,
+`/wf:finalize-workflow`. The skills and refs cite them bare (`/quality-check`)
+for brevity; that is shorthand for the reader of this text, never the form
+given to the user. Every command named in chat — a *Next:* line, a report, an
+instruction to type something — carries the `wf:` prefix.
+
+**Who can run it decides how it is offered.** Four of the commands that close
+a stage — `/wf:run-workflow`, `/wf:quality-check`, `/wf:finalize-workflow`,
+`/wf:pull-request` — are model-invocable on the user's explicit request: an
+offer to run one is honest, because the yes can be acted on. When a skill
+ends on one of them, offer it — a reply button or the host's closing box
+(*"Run the quality check?"* → *Yes, quality check*) — and on the yes invoke
+the skill at once, with the Skill tool. Never answer a yes by sending the
+user off to type the command.
+
+Every other command the user types carries `disable-model-invocation: true` —
+`/wf:execute-phase` above all, whose launch belongs to `wf-bar`'s ▶ (clear,
+model, effort) — and cannot be run by the model: an offer would come back as
+a yes the model cannot deliver. When a skill ends on one of those, it closes
 flat, with no question, the command named as its last line:
 
-> Next: `/wf:quality-check`.
+> Next: `/wf:execute-phase`.
 
 No gate line, no `AskUserQuestion`, and no reply button or next-step
-question of the host's (the desktop's closing box included) that offers to
-launch it. `wf-bar`, where installed, proposes the same command in the
-empty prompt box — → or Tab takes it, Enter sends it. A real choice
-between two roads (*quality check now, or fix X first?*) is still asked;
-its options name the commands, never launch them.
+question of the host's that offers to launch it. `wf-bar`, where installed,
+proposes the same command in the empty prompt box — → or Tab takes it, Enter
+sends it. A real choice between two roads (*quality check now, or fix X
+first?*) is still asked; its options name the commands.
 
 ## Plan directory
 

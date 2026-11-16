@@ -1,7 +1,6 @@
 ---
-description: Create a Pull Request after thorough review as a meticulous maintainer
+description: Create a Pull Request after thorough review as a meticulous maintainer Invoke only on the user's explicit request — the command typed, or the user accepting an offer to run it (a reply button, a yes); never on your own initiative.
 argument-hint: [issue-number]
-disable-model-invocation: true
 allowed-tools: Bash(gh:*), Bash(git:*), Bash(cat:*), Bash(python3:*), Read, Grep, Glob, AskUserQuestion, Skill
 ---
 

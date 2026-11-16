@@ -5,7 +5,7 @@
 
 # Working in phases with Claude Code
 
-**Version 6.53.0** — see the [Changelog](#changelog). For people who already use Claude Code freestyle, with good results, and want to know what a method adds — no leap of faith required.
+**Version 6.54.0** — see the [Changelog](#changelog). For people who already use Claude Code freestyle, with good results, and want to know what a method adds — no leap of faith required.
 
 > **Rather try it than read about it?** [Workflow tutorial game](https://fporcari.github.io/workflow-tutorial-game/) — the method as an interactive tutorial, in the browser, nothing to install.
 
@@ -364,6 +364,7 @@ One entry per release in [CHANGELOG.md](CHANGELOG.md) — the most recent:
 
 | Version | In one line |
 |---|---|
+| 6.54.0 | `/wf:run-workflow` launches at once when the pre-flight changed nothing; `run-workflow`, `quality-check`, `finalize-workflow` and `pull-request` run on the user's yes to an offer; commands are named `/wf:<skill>` |
 | 6.53.0 | `wf-bar`'s ▶ stays down once pressed — `● <step> · launched` until the plan moves on, and none in a worker already building its `[>]` phase — and the same step is proposed in the empty prompt box, → or Tab to take it, Enter doing what the ▶ does; a skill ending on a command the user types names it and never offers to launch it. |
 | 6.52.0 | A programme's roadmap crosses to the parent at each macro's close: `/finalize-workflow` keeps `.phased/roadmap.md` in the consolidated commit with its macro flipped `(done)`, tags the archive and deletes the old branch instead of keeping it alive; a foreman commands one macro, the next starts in a fresh chat, and `/resume-workflow` on a parent between macros names it. |
 | 6.51.0 | On a manual plan the foreman opens the worker as a linked child titled `Worker P<N> · <theme>`, so the first `wf-bar` ▶ launches the phase; the launch stays the human's, and a live worker is pointed at, never doubled. |

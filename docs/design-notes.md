@@ -57,7 +57,7 @@ in two thicknesses beats two mechanisms that drift apart.
 ## Invocation: which skills stay model-invoked
 
 Every shipped skill is user-invoked (`disable-model-invocation: true`) except
-three, each for a concrete reason:
+three, each for a concrete reason, plus four that run on request:
 
 - `execute-phase-agent` and `repair-phase` — `scripts/run-workflow.sh` reaches
   them from *inside* a `/goal` contract, whose body is prose ("Use the
@@ -66,6 +66,14 @@ three, each for a concrete reason:
 - `resume-workflow` — the entry point and router: the one skill the agent should
   be able to reach on its own when the user asks where the work stands, and the
   place that names the others.
+- `run-workflow`, `quality-check`, `finalize-workflow`, `pull-request` — the
+  commands that close a stage. Kept user-only, a skill ending on one of them
+  could only name it, and the host's closing box offered it anyway: the user
+  pressed *Yes, quality check* and was told to type `/wf:quality-check`. Their
+  descriptions limit them to the user's explicit request — typed, or a yes to
+  the offer — so the yes runs them. `execute-phase` stays user-only: its
+  launch is `wf-bar`'s ▶, which clears the chat and sets model and effort
+  first.
 
 The rest are only ever typed, by the user or by a launcher
 (`claude -p "/phased-workflow:<skill>"`, which works fine on a user-invoked

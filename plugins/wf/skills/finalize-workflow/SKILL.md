@@ -1,6 +1,5 @@
 ---
-description: Close the workflow — quality-check gate, durable lessons, plan archive, consolidation into one clean commit
-disable-model-invocation: true
+description: Close the workflow — quality-check gate, durable lessons, plan archive, consolidation into one clean commit Invoke only on the user's explicit request — the command typed, or the user accepting an offer to run it (a reply button, a yes); never on your own initiative.
 allowed-tools: Bash(git:*), Bash(gh:*), Bash(cd:*), Bash(head:*), Bash(sed:*), Bash(grep:*), Bash(mkdir:*), Bash(python3:*), Bash(bash:*), Read, Grep, Glob, Write, Edit, AskUserQuestion, SendMessage, ListAgents, mcp__ccd_session_mgmt__send_message, mcp__ccd_session_mgmt__list_sessions
 ---
 

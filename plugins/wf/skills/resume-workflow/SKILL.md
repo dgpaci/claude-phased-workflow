@@ -13,7 +13,7 @@ A healthy workflow is a valid reason to run this: when nothing is broken it earl
 
 ## The map
 
-Every other skill in this plugin is **user-invoked**: only the user typing its name reaches it. Naming the right one is part of this skill's job — in Step 3's *Next step*, and whenever the user asks what to run.
+Most other skills in this plugin are **user-invoked**: only the user typing its name reaches it. Four — `run-workflow`, `quality-check`, `finalize-workflow`, `pull-request` — also run on the user's explicit yes to an offer (`common.md` → *The next command*). Naming the right one is part of this skill's job — in Step 3's *Next step*, and whenever the user asks what to run — always as `/wf:<skill>`, the form the user types.
 
 | Skill | Reach for it when |
 |---|---|

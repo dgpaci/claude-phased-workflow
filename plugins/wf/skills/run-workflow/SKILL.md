@@ -1,6 +1,5 @@
 ---
-description: Run all remaining phases autonomously — launches a new claude session per phase with correct model
-disable-model-invocation: true
+description: Run all remaining phases autonomously — launches a new claude session per phase with correct model Invoke only on the user's explicit request — the command typed, or the user accepting an offer to run it (a reply button, a yes); never on your own initiative.
 allowed-tools: Bash, Read, Write, Edit, Monitor, PushNotification, AskUserQuestion, Agent, SendUserFile, mcp__ccd_session_mgmt__send_message, mcp__ccd_session_mgmt__list_sessions
 ---
 
@@ -46,11 +45,13 @@ Runs `${CLAUDE_PLUGIN_ROOT}/scripts/run-workflow.sh`, which launches one fresh `
 
    **The `Repair` row** — an optional last row, `| Repair | <effort> | <model> |`, setting the fresh-eyes session launched when a phase comes back `[!]`. Omitted → `opus` / `high`. Decide it here rather than leaving it to the launcher: only the plan knows whether a failure on these phases is a hard problem or a slipped detail. `fable` earns it when the phases carry architectural or multi-file work (the cap doubles with it); `sonnet` is a validation error on this row.
 
-6. **Rewrite the plan** with the refined phases and the table, committing the edit as `wf: refine plan for autonomous run` (the plan is tracked), then show the user the final phase list with the model chosen for each and close with the gate line (`common.md` → *The gate line*): *"**Launch?** On your ok the run starts detached over all \<N\> phases; it outlives this chat, but the watch and its pushes need the app open."* The line is the gate — AskUserQuestion exists in this skill solely for the stop-work question below, never for the launch.
+6. **Rewrite the plan** with the refined phases and the table, committing the edit as `wf: refine plan for autonomous run` (the plan is tracked).
+
+7. **Launch or ask — the typed command is the go-ahead.** The user who typed `/wf:run-workflow` already said *run*; a recap ending in *"On your ok…"* asks the same thing twice. So when the pre-flight changed nothing the user has not already seen — the plan passed steps 2–4 as it stood, its execution config table was already there and step 5 changed no row — show the phase list with the model of each in a few lines and **launch at once** (*Execution* below), with no gate line. Ask only when the pre-flight wrote something the user never approved: step 5 created the table or changed a model or effort (that is where the run's cost is decided), or step 6 committed a rewrite. Then show the final phase list with the model chosen for each and close with the gate line (`common.md` → *The gate line*): *"**Launch?** On your ok the run starts detached over all \<N\> phases; it outlives this chat, but the watch and its pushes need the app open."* Either way, AskUserQuestion exists in this skill solely for the stop-work question below, never for the launch.
 
 ## Execution
 
-After confirmation, launch the run **detached**, from an ordinary foreground Bash call, and watch it from this session while it runs. Never `run_in_background`: Claude Code stops a background command at its time limit (2 h at most, since 2.1.285), and a multi-phase run outlasts it. `runtime.py detach` starts the launcher in a session of its own, writes its pid and returns at once. Its output goes to a log **outside the repo**; a file inside `.phased/` would dirty the tree at the next phase's start and land in that phase's commit, which is exactly why the launcher itself writes no file. Every control file of this run is named from ONE prefix, `$T` below — `next-phase.py --transport` computes it, and the launcher computes the same one, so a second checkout carrying the same slug can never consume this run's signals:
+Once step 7 clears it — at once, or after the ok — launch the run **detached**, from an ordinary foreground Bash call, and watch it from this session while it runs. Never `run_in_background`: Claude Code stops a background command at its time limit (2 h at most, since 2.1.285), and a multi-phase run outlasts it. `runtime.py detach` starts the launcher in a session of its own, writes its pid and returns at once. Its output goes to a log **outside the repo**; a file inside `.phased/` would dirty the tree at the next phase's start and land in that phase's commit, which is exactly why the launcher itself writes no file. Every control file of this run is named from ONE prefix, `$T` below — `next-phase.py --transport` computes it, and the launcher computes the same one, so a second checkout carrying the same slug can never consume this run's signals:
 
 ```bash
 T=$(python3 "${CLAUDE_PLUGIN_ROOT}/scripts/next-phase.py" --transport)

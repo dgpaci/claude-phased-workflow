@@ -1,6 +1,5 @@
 ---
-description: Quality check of the finished workflow — QA pass with the user, naming review, whole-diff review at chosen depth, ONE consolidated correction batch verified once; stamps the plan for /finalize-workflow
-disable-model-invocation: true
+description: Quality check of the finished workflow — QA pass with the user, naming review, whole-diff review at chosen depth, ONE consolidated correction batch verified once; stamps the plan for /finalize-workflow Invoke only on the user's explicit request — the command typed, or the user accepting an offer to run it (a reply button, a yes); never on your own initiative.
 allowed-tools: Bash(git:*), Bash(cd:*), Bash(head:*), Bash(sed:*), Bash(grep:*), Bash(python3:*), Bash(bash:*), Read, Grep, Glob, Write, Edit, AskUserQuestion, Skill, Agent, SendUserFile
 ---
 
@@ -108,7 +107,7 @@ The hash is HEAD at stamp time — it is what lets finalize detect a stale check
 git add .phased && git commit -q -m "wf: quality check — <review depth>"
 ```
 
-Close with the stamp line repeated in chat and the next step: *"Quality check stamped. Next: `/finalize-workflow` to consolidate and close the branch."* — or, when rows took the *phase* road, `/resume-workflow` first.
+Close with the stamp line repeated in chat and the next step offered (`common.md` → *The next command*): *"Quality check stamped. Run `/wf:finalize-workflow` to consolidate and close the branch?"* — on the yes, invoke it. When rows took the *phase* road, the next step is `/wf:resume-workflow` first.
 
 ## Rules
 
